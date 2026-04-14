@@ -10,56 +10,62 @@ This project classifies human emotions using:
 - Eye-tracking data
 
 ---
-## 📚 Literature Review (Research Justification)
+## 📚 Research-Based Justification (Fusion Strategy)
 
-To design an effective emotion classification system, multiple research papers and prior works on EEG, eye-tracking, deep learning, and multimodal fusion were studied.
+This work is supported by detailed analysis of multimodal fusion techniques and session variability challenges in SEED-IV dataset.
 
-### 🔹 Key Areas Explored
+### 🔹 Why Feature-Level Fusion
 
-1. *EEG-based Emotion Recognition*
-   - EEG signals capture brain activity patterns linked to emotional states
-   - Deep learning models (DNN, CNN, RNN) show strong performance
-   - Challenge: Noisy signals and high dimensionality
+- Dataset provides *pre-extracted features (DE features)*, not raw signals
+- EEG signals are *non-stationary across sessions*
+- Eye-tracking data varies with attention and environment
+- Feature-level fusion enables *joint learning across modalities*
 
-2. *Eye-Tracking for Emotion Detection*
-   - Eye movement patterns (fixation, saccades) correlate with attention and emotion
-   - Works well as a complementary modality
-   - Limitation: weaker standalone performance
-
-3. *Deep Learning Models*
-   - MLP: baseline model for structured data
-   - DNN: deeper architecture improves feature learning
-   - Attention models: focus on important features
-   - Hybrid models: combine multiple learning strategies
-
-4. *Multimodal Fusion Techniques*
-   - Feature-level fusion: combines EEG + Eye features before training
-   - Decision-level fusion: combines outputs of separate models
-   - Research shows multimodal fusion improves robustness and accuracy
+👉 Conclusion: Feature-level fusion improves generalization and stability.
 
 ---
 
-### 🔹 Key Insights from Literature
+### 🔹 Why Decision Fusion Failed
 
-| Concept | Insight |
-|--------|--------|
-| EEG | Strong signal for emotion but noisy |
-| Eye-tracking | Useful but weaker alone |
-| Deep models | Better than traditional ML |
-| Attention | Helps focus on important features |
-| Fusion | Improves overall performance |
+- Combines outputs after prediction
+- No interaction between EEG and Eye features
+- Cannot handle session variability effectively
+
+👉 Observed in results: ~50% accuracy (near random)
 
 ---
 
-### 🔹 How Literature Influenced This Work
+### 🔹 Role of Attention
 
-Based on research findings:
+Attention helps by:
 
-- Used *window-based learning* (instead of trial averaging)
-- Implemented *multiple deep learning models* for comparison
-- Applied *feature-level fusion (X_fused)*
-- Implemented *decision-level fusion model*
-- Evaluated all models using standard metrics
+- Dynamically weighting important features
+- Reducing noise from unstable signals
+- Adapting across session variations
+- Improving cross-modal interaction
+
+---
+
+### 🔹 Research Paper Evidence
+
+| Paper | Model | Fusion Type | Accuracy | Key Insight |
+|------|------|------------|---------|------------|
+| Zheng et al. (2014) | ML | Feature vs Decision | 73.59% | Feature fusion better |
+| Yang et al. (2024) | Attention Hybrid | Feature + Attention | 92.26% | Best performance |
+| Song et al. (2024) | DNN | Feature | 91.16% | Strong feature learning |
+| Fu et al. (2023) | Hybrid | Feature + Attention | 87.32% | Noise reduction |
+| Wang et al. (2025) | Hybrid | Feature + Attention | 90.62% | Cross-modal alignment |
+
+---
+
+### 🔹 Alignment with Our Results
+
+| Method | Literature Insight | Our Result |
+|-------|------------------|-----------|
+| Feature Fusion | Best approach | ✅ Used |
+| Attention | Improves performance | ⚠️ Moderate gain |
+| Hybrid Models | Strongest performance | ✅ BEST (92%+) |
+| Decision Fusion | Weak performance | ❌ Confirmed (~50%) |
 
 ---
 ### Approach:

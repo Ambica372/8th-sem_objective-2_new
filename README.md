@@ -74,6 +74,22 @@ Attention helps by:
 - Multimodal feature fusion
 
 ---
+## 🧠 Feature Processing and Optimization
+
+To improve model performance and reduce noise:
+
+- EEG features were reduced using **PCA (Principal Component Analysis)**  
+  → Retained ~95% variance while reducing dimensionality  
+
+- Eye-tracking features were **cleaned**  
+  → Removed redundant and duplicate columns  
+
+- Final feature representation:
+  - EEG (PCA-reduced) + Eye (cleaned)
+  - Total = **58 optimized features**
+
+👉 This ensures that only the most informative and stable features are used for training, improving accuracy and generalization.
+___
 ## 🚀 Final Result (Key Outcome)
 
 - *Best Model:* Hybrid Model  

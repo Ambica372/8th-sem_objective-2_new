@@ -75,7 +75,6 @@ Attention helps by:
 
 ---
 ## 🧠 Feature Processing and Optimization
-## 🧠 Feature Processing and Optimization
 
 Feature selection was based on **Objective 1 analysis**, where the most relevant and informative features were identified.
 

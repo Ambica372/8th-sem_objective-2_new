@@ -9,6 +9,59 @@ This project classifies human emotions using:
 - EEG signals (brain activity)
 - Eye-tracking data
 
+---
+## 📚 Literature Review (Research Justification)
+
+To design an effective emotion classification system, multiple research papers and prior works on EEG, eye-tracking, deep learning, and multimodal fusion were studied.
+
+### 🔹 Key Areas Explored
+
+1. *EEG-based Emotion Recognition*
+   - EEG signals capture brain activity patterns linked to emotional states
+   - Deep learning models (DNN, CNN, RNN) show strong performance
+   - Challenge: Noisy signals and high dimensionality
+
+2. *Eye-Tracking for Emotion Detection*
+   - Eye movement patterns (fixation, saccades) correlate with attention and emotion
+   - Works well as a complementary modality
+   - Limitation: weaker standalone performance
+
+3. *Deep Learning Models*
+   - MLP: baseline model for structured data
+   - DNN: deeper architecture improves feature learning
+   - Attention models: focus on important features
+   - Hybrid models: combine multiple learning strategies
+
+4. *Multimodal Fusion Techniques*
+   - Feature-level fusion: combines EEG + Eye features before training
+   - Decision-level fusion: combines outputs of separate models
+   - Research shows multimodal fusion improves robustness and accuracy
+
+---
+
+### 🔹 Key Insights from Literature
+
+| Concept | Insight |
+|--------|--------|
+| EEG | Strong signal for emotion but noisy |
+| Eye-tracking | Useful but weaker alone |
+| Deep models | Better than traditional ML |
+| Attention | Helps focus on important features |
+| Fusion | Improves overall performance |
+
+---
+
+### 🔹 How Literature Influenced This Work
+
+Based on research findings:
+
+- Used *window-based learning* (instead of trial averaging)
+- Implemented *multiple deep learning models* for comparison
+- Applied *feature-level fusion (X_fused)*
+- Implemented *decision-level fusion model*
+- Evaluated all models using standard metrics
+
+---
 ### Approach:
 - Window-based learning (NO trial aggregation)
 - Deep learning models for classification

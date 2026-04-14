@@ -1,49 +1,62 @@
-# EEG + Eye-Tracking Emotion Classification (Window-Based)
+---
 
-## 📌 Overview
+# 🧠 EEG + Eye-Tracking Emotion Classification (Window-Based Deep Learning)
 
-This project focuses on emotion classification using multimodal physiological signals:
+---
+
+## 📌 Project Overview
+
+This project performs *emotion classification using multimodal physiological signals*:
 
 - EEG (brain signals)
 - Eye-tracking data
 
-We use a *window-based approach (NO aggregation)* to preserve temporal information and improve learning stability.
+We use a *window-based approach (NO trial aggregation)* to preserve temporal dynamics and improve model learning.
 
 ---
 
-## 🎯 Objective
+## 🎯 Objectives
 
-- Build multiple deep learning models
-- Compare their performance
-- Identify the best architecture
-- Ensure stable training on full dataset
-- Handle real-world issues like corrupted data (NaN/Inf)
+- Build multiple deep learning models  
+- Compare performance across architectures  
+- Handle real-world data issues (NaN / Inf corruption)  
+- Ensure stable full-dataset training  
+- Identify the best-performing model  
 
 ---
 
 ## 📂 Project Structure
 
-8th_sem_new/ │ ├── stage1_data/                # Raw data ├── stage2_preprocessing/       # Cleaning + feature extraction ├── stage3_feature_analysis/    # Feature understanding ├── stage4_models/              # Model training │   ├── mlp/ │   ├── dnn/ │   ├── attention/ │   ├── hybrid/ │   ├── decision_fusion/ │   └── comparison/             # Final results │ ├── stage4_pipeline/            # Processed numpy arrays ├── docs/                       # Documentation └── run_models.py               # Main training script
+8th_sem_new/ │ ├── stage1_data/ │   └── Raw EEG and Eye-tracking data │ ├── stage2_preprocessing/ │   └── Data cleaning and feature extraction │ ├── stage3_feature_analysis/ │   └── Feature inspection and validation │ ├── stage4_pipeline/ │   └── processed_data/ │       ├── X_fused.npy │       ├── X_eeg_pca.npy │       ├── X_eye_clean.npy │       └── y.npy │ ├── stage4_models/ │   ├── mlp/ │   ├── dnn/ │   ├── attention/ │   ├── hybrid/ │   ├── decision_fusion/ │   └── comparison/ │       ├── model_comparison.csv │       └── performance_plot.png │ ├── docs/ ├── run_models.py └── README.md
 
 ---
 
-## 🧠 Approach
+## 🔁 Workflow
 
-### 1. Window-Based Training (IMPORTANT)
+Raw Data → Preprocessing → Feature Extraction → Model Training → Evaluation → Comparison
 
-- Each sample = time window (NOT trial aggregation)
-- Preserves temporal information
-- Prevents loss of signal patterns
+---
+
+## 🧠 Methodology
+
+### 1. Window-Based Learning (KEY IDEA)
+
+- Each sample = time window  
+- No trial-level aggregation  
+- Preserves temporal patterns  
 
 ---
 
 ### 2. Data Pipeline
 
-- EEG → PCA features
-- Eye → cleaned features
-- Combined → X_fused (58 features)
+| Component | Description |
+|----------|------------|
+| EEG | PCA-reduced features |
+| Eye | Cleaned eye features |
+| Fusion | Combined 58 features |
 
-Final inputs:
+Final arrays used:
+
 - X_fused.npy
 - X_eeg_pca.npy
 - X_eye_clean.npy
@@ -51,24 +64,34 @@ Final inputs:
 
 ---
 
-### 3. Data Cleaning (CRITICAL FIX)
+## ⚠️ Critical Issue Encountered
 
-Problem:
-- Full dataset training caused *NaN loss*
-- Models collapsed
+### Problem
 
-Root Cause:
-- Corrupt data (NaN / Inf values)
+NaN loss detected at epoch 1
 
-Fix:
+### Impact
+
+- Training failed  
+- Accuracy dropped to ~25% (random)  
+- Model collapse (single-class prediction)  
+
+---
+
+### Root Cause
+
+- NaN values  
+- Infinite values  
+- Invalid feature distributions  
+
+---
+
+### Solution
+
 ```python
-bad_rows = np.isnan(...) | np.isinf(...)
+bad_rows = np.isnan(X).any(axis=1) | np.isinf(X).any(axis=1)
 
-Result:
-
-Removed 26 corrupted samples
-
-Dataset became stable
+Removed corrupted samples
 
 
 
@@ -78,69 +101,17 @@ Dataset became stable
 
 Metric	Value
 
-Total samples (original)	37,575
-Removed corrupted samples	26
-Final samples used	37,549
-Features per sample	58
+Original samples	37,575
+Corrupted removed	26
+Final dataset	37,549
+Features	58
 Classes	4
 
 
 
 ---
 
-⚙️ Models Implemented
-
-1. MLP (Baseline)
-
-2 hidden layers
-
-BatchNorm + Dropout
-
-
-
----
-
-2. Deep Neural Network (DNN)
-
-Deeper architecture
-
-Higher capacity learning
-
-
-
----
-
-3. Attention Model
-
-Learns feature importance
-
-Applies attention weights
-
-
-
----
-
-4. Hybrid Model (BEST)
-
-Combines dense + attention
-
-Strong feature interaction
-
-
-
----
-
-5. Decision Fusion
-
-Separate EEG + Eye models
-
-Late fusion (averaging)
-
-
-
----
-
-🚀 Training Details
+⚙️ Training Configuration
 
 Parameter	Value
 
@@ -148,84 +119,81 @@ Epochs	30
 Batch Size	64
 Learning Rate	1e-4
 Loss	CrossEntropy
-Split	80% Train / 20% Test
+Split	80/20
 
 
 
 ---
 
-📈 Final Results
+🧠 Models Implemented
 
-🏆 Best Model: Hybrid
+Model	Description
 
-Model	Accuracy
-
-MLP	76.03%
-DNN	90.35%
-Attention	68.25%
-Hybrid	92.84%
-Decision Fusion	50.54%
+MLP	Baseline dense network
+DNN	Deep neural network
+Attention	Feature weighting
+Hybrid	Dense + Attention
+Decision Fusion	EEG + Eye late fusion
 
 
 
 ---
 
-📊 Key Observations
+📊 Final Results (PROOF)
 
-✅ What Worked
+Model	Accuracy	Precision	Recall	F1-score
 
-Data cleaning fixed NaN collapse
+MLP	76.03%	76.67%	76.03%	75.96%
+DNN	90.35%	90.48%	90.35%	90.33%
+Attention	68.25%	68.39%	68.25%	68.24%
+Hybrid	92.84%	92.86%	92.84%	92.84%
+Decision Fusion	50.54%	51.06%	50.54%	50.44%
+
+
+
+---
+
+📈 Key Observations
+
+What Worked
+
+Data cleaning fixed training instability
 
 Feature scaling improved convergence
 
-Hybrid model captured complex patterns
+Hybrid model captured best patterns
 
-Window-based approach preserved signal structure
+Window-based learning preserved signal info
 
 
 
 ---
 
-❌ What Failed
+What Failed
 
 Decision Fusion performed poorly (~50%)
 
-Attention alone was weaker than hybrid
+Attention alone underperformed
 
-Raw full dataset without cleaning caused total failure
+Unclean data caused total failure
+
+
+
+---
+
+📉 Before vs After Fix
+
+Stage	Result
+
+Before cleaning	NaN loss, failure
+After cleaning	Stable training
+Final	92.84% accuracy
 
 
 
 ---
 
-⚠️ Critical Issue Encountered
-
-Problem
-
-NaN loss detected at epoch 1
-
-Impact
-
-Models stopped learning
-
-Accuracy dropped to random (~25%)
-
-
-Solution
-
-Removed corrupted samples
-
-Applied scaling
-
-
-Result
-
-Training stabilized → Accuracy jumped to 92.84%
-
-
----
-
-📉 Why Hybrid Model Won
+🧠 Why Hybrid Model Performs Best
 
 Combines:
 
@@ -234,9 +202,7 @@ Dense learning (global patterns)
 Attention (feature importance)
 
 
-Better representation of multimodal data
-
-Balanced predictions across classes
+Strong interaction between EEG + Eye features
 
 
 
@@ -257,19 +223,35 @@ Comparison folder:
 
 model_comparison.csv
 
+performance_plot.png
+
 
 
 ---
 
-📌 Conclusion
+📚 Research Alignment
+
+This project aligns with:
+
+EEG-based emotion recognition research
+
+Multimodal fusion improving performance
+
+Attention mechanisms enhancing feature selection
+
+
+
+---
+
+🧾 Conclusion
 
 Window-based training is stable and effective
 
 Data quality is critical
 
-Hybrid model provides best performance
+Hybrid model achieved best performance (92.84%)
 
-Proper preprocessing > complex models
+Proper preprocessing > complex modeling
 
 
 
@@ -277,13 +259,29 @@ Proper preprocessing > complex models
 
 🔮 Future Work
 
-Hyperparameter tuning
-
-Advanced fusion methods
-
 Transformer-based models
 
-Real-time prediction system
+Real-time emotion detection
+
+Advanced fusion strategies
+
+Hyperparameter tuning
+
+
+
+---
+
+👨‍💻 Final Note
+
+This project demonstrates:
+
+Debugging real-world ML issues
+
+Model comparison and evaluation
+
+Handling corrupted datasets
+
+Achieving strong classification performance
 
 
 

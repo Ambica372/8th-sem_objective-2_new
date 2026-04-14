@@ -75,20 +75,21 @@ Attention helps by:
 
 ---
 ## 🧠 Feature Processing and Optimization
+## 🧠 Feature Processing and Optimization
 
-To improve model performance and reduce noise:
+Feature selection was based on **Objective 1 analysis**, where the most relevant and informative features were identified.
 
 - EEG features were reduced using **PCA (Principal Component Analysis)**  
-  → Retained ~95% variance while reducing dimensionality  
+  → Retained ~95% variance while selecting the most important components  
 
-- Eye-tracking features were **cleaned**  
+- Eye-tracking features were **cleaned and refined**  
   → Removed redundant and duplicate columns  
 
 - Final feature representation:
   - EEG (PCA-reduced) + Eye (cleaned)
   - Total = **58 optimized features**
 
-👉 This ensures that only the most informative and stable features are used for training, improving accuracy and generalization.
+👉 These features were not chosen randomly — they are the **best-performing features identified from Objective 1**, ensuring improved stability and accuracy in Objective 2.
 ___
 ## 🚀 Final Result (Key Outcome)
 

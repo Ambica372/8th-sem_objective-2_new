@@ -15,6 +15,15 @@ This project classifies human emotions using:
 - Multimodal feature fusion
 
 ---
+## 🚀 Final Result (Key Outcome)
+
+- *Best Model:* Hybrid Model  
+- *Accuracy:* *92.84%*  
+- *Precision:* 92.86%  
+- *Recall:* 92.84%  
+- *F1-score:* 92.84%  
+
+This model outperformed all other architectures including MLP, DNN, Attention, and Decision Fusion.
 
 ## 🧾 Final Results (PROOF)
 
@@ -51,7 +60,20 @@ This project classifies human emotions using:
 ├── run_models.py             # Main script
 └── README.md
 
+---
+## ▶️ How to Run
 
+1. Ensure processed data is available in:
+processed_data/
+
+2. Run the training script:
+python stage4_models/run_models.py
+
+3. Outputs generated:
+- Model weights
+- Confusion matrices
+- Model comparison CSV
+- Performance plot
 ---
 
 ## ⚠️ Critical Issue Discovered
